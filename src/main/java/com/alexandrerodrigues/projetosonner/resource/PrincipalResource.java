@@ -6,9 +6,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/")
-public class HomeResource {
+public class PrincipalResource {
     @GetMapping
     public String getHello() {
-        return "Home page ta on!";
+
+        return "Página principal ta on!";
+
     }
 }
