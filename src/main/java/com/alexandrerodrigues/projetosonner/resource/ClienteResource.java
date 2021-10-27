@@ -24,7 +24,9 @@ public class ClienteResource {
 
     @PostMapping
     public ResponseEntity<Cliente> save(@RequestBody Cliente cliente) {
+
         clienteRepository.save(cliente);
+
         return new ResponseEntity<>(cliente, HttpStatus.OK);
     }
 
