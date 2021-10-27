@@ -9,29 +9,38 @@ public class Cliente implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idCliente;
+    private Integer id;
+    private String codigo;
     private String nome;
     private String cpf;
     private String telefone;
 
-    public Cliente(){
-
+    public Cliente() {
+        super();
     }
 
-    public Cliente(Integer idCliente, String nome, String cpf, String telefone) {
-        super();
-        this.idCliente = idCliente;
+    public Cliente(Integer id, String codigo, String nome, String cpf, String telefone) {
+        this.id = id;
+        this.codigo = codigo;
         this.nome = nome;
         this.cpf = cpf;
         this.telefone = telefone;
     }
 
-    public Integer getIdCliente() {
-        return idCliente;
+    public Integer getId() {
+        return id;
     }
 
-    public void setId(Integer idCliente) {
-        this.idCliente = idCliente;
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     public String getNome() {
@@ -56,15 +65,5 @@ public class Cliente implements Serializable {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
-    }
-
-    @Override
-    public String toString() {
-        return "Cliente{" +
-                "idCliente=" + idCliente +
-                ", nome='" + nome + '\'' +
-                ", cpf='" + cpf + '\'' +
-                ", telefone='" + telefone + '\'' +
-                '}';
     }
 }

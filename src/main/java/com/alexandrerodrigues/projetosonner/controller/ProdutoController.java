@@ -1,4 +1,4 @@
-package com.alexandrerodrigues.projetosonner.resource;
+package com.alexandrerodrigues.projetosonner.controller;
 
 import com.alexandrerodrigues.projetosonner.model.Produto;
 import com.alexandrerodrigues.projetosonner.repository.ProdutoRepository;
@@ -13,11 +13,11 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/produtos")
-public class ProdutoResource {
+public class ProdutoController {
 
     private ProdutoRepository produtoRepository;
 
-    public ProdutoResource(ProdutoRepository produtoRepository) {
+    public ProdutoController(ProdutoRepository produtoRepository) {
         super();
         this.produtoRepository = produtoRepository;
     }

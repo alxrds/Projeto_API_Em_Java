@@ -1,4 +1,4 @@
-package com.alexandrerodrigues.projetosonner.resource;
+package com.alexandrerodrigues.projetosonner.controller;
 
 import com.alexandrerodrigues.projetosonner.model.Cliente;
 import com.alexandrerodrigues.projetosonner.repository.ClienteRepository;
@@ -13,18 +13,20 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/clientes")
-public class ClienteResource {
+public class ClienteController {
 
     private ClienteRepository clienteRepository;
 
-    public ClienteResource(ClienteRepository clienteRepository) {
+    public ClienteController(ClienteRepository clienteRepository) {
         super();
         this.clienteRepository = clienteRepository;
     }
 
     @PostMapping
     public ResponseEntity<Cliente> save(@RequestBody Cliente cliente) {
+
         clienteRepository.save(cliente);
+
         return new ResponseEntity<>(cliente, HttpStatus.OK);
     }
 

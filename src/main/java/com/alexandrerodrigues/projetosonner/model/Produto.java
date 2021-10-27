@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Entity
 public class Produto implements Serializable {
@@ -12,28 +13,29 @@ public class Produto implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idProduto;
+    private Integer id;
+    private String codigo;
     private String descricao;
-    private Float precoUnitario;
+    private BigDecimal precoUnitario;
 
-
-    public Produto(){
-
-    }
-
-    public Produto(Integer idProduto, String descricao, Float precoUnitario) {
+    public Produto() {
         super();
-        this.idProduto = idProduto;
-        this.descricao = descricao;
-        this.precoUnitario = precoUnitario;
     }
 
-    public Integer getIdProduto() {
-        return idProduto;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIdProduto(Integer idProduto) {
-        this.idProduto = idProduto;
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     public String getDescricao() {
@@ -44,14 +46,11 @@ public class Produto implements Serializable {
         this.descricao = descricao;
     }
 
-    public Float getPrecoUnitario() {
+    public BigDecimal getPrecoUnitario() {
         return precoUnitario;
     }
 
-    public void setPrecoUnitario(Float precoUnitario) {
+    public void setPrecoUnitario(BigDecimal precoUnitario) {
         this.precoUnitario = precoUnitario;
     }
-
-
-
 }
