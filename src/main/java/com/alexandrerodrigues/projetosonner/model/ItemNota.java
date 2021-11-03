@@ -19,17 +19,21 @@ public class ItemNota implements Serializable {
     @ManyToOne
     @JoinColumn(name="id_produto")
     private Produto produto;
+
+    private BigDecimal quantidade;
+
     private BigDecimal valorTotal;
+
 
     public ItemNota() {
         super();
     }
-    public ItemNota(Integer id, Produto produto, Nota nota, BigDecimal valorTotal) {
+    public ItemNota(Integer id, Nota nota, Produto produto, BigDecimal quantidade,  BigDecimal valorTotal) {
         super();
         this.id = id;
         this.nota = nota;
         this.produto = produto;
-        this.valorTotal = valorTotal;
+        this.quantidade = quantidade;
     }
 
     public Integer getId() {
@@ -52,12 +56,16 @@ public class ItemNota implements Serializable {
         return produto;
     }
 
-    public void setProduto(Produto produto) {
-        this.produto = produto;
-    }
+    public void setProduto(Produto produto) { this.produto = produto;}
+
+    public BigDecimal getQuantidade() { return quantidade; }
+
+    public void setQuantidade(BigDecimal quantidade) { this.quantidade = quantidade; }
 
     public BigDecimal getValorTotal() { return valorTotal; }
 
-    public void setValorTotal(BigDecimal valorTotal) { this.valorTotal = valorTotal; }
+    public void setValorTotal(BigDecimal valorTotal) {
+        this.valorTotal = valorTotal;
+    }
 
 }

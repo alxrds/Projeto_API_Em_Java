@@ -1,11 +1,14 @@
 package com.alexandrerodrigues.projetosonner.controller;
 
+import com.alexandrerodrigues.projetosonner.model.ItemNota;
 import com.alexandrerodrigues.projetosonner.model.Nota;
+import com.alexandrerodrigues.projetosonner.model.Produto;
 import com.alexandrerodrigues.projetosonner.repository.NotaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -25,6 +28,15 @@ public class NotaController {
 
     @PostMapping
     public ResponseEntity<Nota> save(@RequestBody Nota nota) {
+
+        BigDecimal totalDaNota = BigDecimal.ZERO;
+        for (ItemNota item : nota.getItems()) {
+            item.setNota(nota);
+            item.setValorTotal(item.getQuantidade().multiply(item.getProduto().getPrecoUnitario()));
+            totalDaNota = totalDaNota.add(item.getValorTotal());
+        }
+        nota.setValorNota(totalDaNota);
+
         notaRepository.save(nota);
         return new ResponseEntity<>(nota, HttpStatus.OK);
     }
@@ -45,6 +57,27 @@ public class NotaController {
         }catch (NoSuchElementException nsee) {
             return new ResponseEntity<Optional<Nota>>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Nota> update(@PathVariable Integer id, @RequestBody Nota newNota) {
+        return notaRepository.findById(id).map(nota -> {
+
+
+            BigDecimal totalDaNota = BigDecimal.ZERO;
+            for (ItemNota item : nota.getItems()) {
+                item.setNota(nota);
+                item.setValorTotal(item.getQuantidade().multiply(item.getProduto().getPrecoUnitario()));
+                totalDaNota = totalDaNota.add(item.getValorTotal());
+            }
+            nota.setValorNota(totalDaNota);
+
+            nota.setCliente(newNota.getCliente());
+            nota.setItems(newNota.getItems());
+
+            Nota notaAlterada = notaRepository.save(nota);
+            return ResponseEntity.ok().body(notaAlterada);
+        }).orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping(path = "/{id}")
