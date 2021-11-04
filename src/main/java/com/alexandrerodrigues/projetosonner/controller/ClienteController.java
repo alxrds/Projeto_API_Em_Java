@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+@CrossOrigin(origins= {"*"}, maxAge = 4800, allowCredentials = "false")
 @RestController
 @RequestMapping(path = "/clientes")
 public class ClienteController {
@@ -24,9 +25,7 @@ public class ClienteController {
 
     @PostMapping
     public ResponseEntity<Cliente> save(@RequestBody Cliente cliente) {
-
         clienteRepository.save(cliente);
-
         return new ResponseEntity<>(cliente, HttpStatus.OK);
     }
 
@@ -51,6 +50,7 @@ public class ClienteController {
     @PutMapping(value = "/{id}")
     public ResponseEntity<Cliente> update(@PathVariable Integer id, @RequestBody Cliente newCliente) {
         return clienteRepository.findById(id).map(cliente -> {
+            cliente.setCodigo(newCliente.getCodigo());
             cliente.setNome(newCliente.getNome());
             cliente.setCpf(newCliente.getCpf());
             cliente.setTelefone(newCliente.getTelefone());

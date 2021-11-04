@@ -10,7 +10,7 @@ public class PrincipalController {
     @GetMapping
     public String getHello() {
 
-        return "Página principal ta on!";
+        return "Servidor ta on!";
 
     }
 }

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+@CrossOrigin(origins= {"*"}, maxAge = 4800, allowCredentials = "false")
 @RestController
 @RequestMapping(path = "/produtos")
 public class ProdutoController {
@@ -49,6 +50,7 @@ public class ProdutoController {
     @PutMapping(value = "/{id}")
     public ResponseEntity<Produto> update(@PathVariable Integer id, @RequestBody Produto newProduto) {
         return produtoRepository.findById(id).map(produto -> {
+            produto.setCodigo(newProduto.getCodigo());
             produto.setDescricao(newProduto.getDescricao());
             produto.setPrecoUnitario(newProduto.getPrecoUnitario());
             Produto produtoAlterado = produtoRepository.save(produto);
