@@ -49,8 +49,8 @@ public class NotaController {
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<Optional<Nota>> getById(@PathVariable Integer id) {
-        Optional<Nota> nota;
+    public ResponseEntity<Optional<Nota>>getById(@PathVariable Integer id) {
+        Optional<Nota>nota;
         try {
             nota = notaRepository.findById(id);
             return new ResponseEntity<Optional<Nota>>(nota, HttpStatus.OK);
@@ -60,28 +60,24 @@ public class NotaController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Nota> update(@PathVariable Integer id, @RequestBody Nota newNota) {
+    public ResponseEntity<Nota>update(@PathVariable Integer id, @RequestBody Nota newNota) {
         return notaRepository.findById(id).map(nota -> {
-
-
+            nota.setCliente(newNota.getCliente());
             BigDecimal totalDaNota = BigDecimal.ZERO;
             for (ItemNota item : nota.getItems()) {
                 item.setNota(nota);
+                nota.setItems(item.getNota().getItems());
                 item.setValorTotal(item.getQuantidade().multiply(item.getProduto().getPrecoUnitario()));
                 totalDaNota = totalDaNota.add(item.getValorTotal());
             }
             nota.setValorNota(totalDaNota);
-
-            nota.setCliente(newNota.getCliente());
-            nota.setItems(newNota.getItems());
-
             Nota notaAlterada = notaRepository.save(nota);
             return ResponseEntity.ok().body(notaAlterada);
         }).orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping(path = "/{id}")
-        public ResponseEntity<Optional<Nota>> deleteById(@PathVariable Integer id) {
+        public ResponseEntity<Optional<Nota>>deleteById(@PathVariable Integer id) {
         try {
             notaRepository.deleteById(id);
             return new ResponseEntity<Optional<Nota>>(HttpStatus.OK);
@@ -89,5 +85,4 @@ public class NotaController {
             return new ResponseEntity<Optional<Nota>>(HttpStatus.NOT_FOUND);
         }
     }
-
 }
