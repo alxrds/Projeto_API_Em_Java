@@ -27,8 +27,7 @@ public class NotaController {
     }
 
     @PostMapping
-    public ResponseEntity<Nota> save(@RequestBody Nota nota) {
-
+    public ResponseEntity<Nota>save(@RequestBody Nota nota) {
         BigDecimal totalDaNota = BigDecimal.ZERO;
         for (ItemNota item : nota.getItems()) {
             item.setNota(nota);
@@ -36,7 +35,6 @@ public class NotaController {
             totalDaNota = totalDaNota.add(item.getValorTotal());
         }
         nota.setValorNota(totalDaNota);
-
         notaRepository.save(nota);
         return new ResponseEntity<>(nota, HttpStatus.OK);
     }
