@@ -29,10 +29,10 @@ public class NotaController {
     @PostMapping
     public ResponseEntity<Nota>save(@RequestBody Nota nota) {
         BigDecimal totalDaNota = BigDecimal.ZERO;
-        for (ItemNota item : nota.getItems()) {
-            item.setNota(nota);
-            item.setValorTotal(item.getQuantidade().multiply(item.getProduto().getPrecoUnitario()));
-            totalDaNota = totalDaNota.add(item.getValorTotal());
+        for (ItemNota itemNota : nota.getItems()) {
+            itemNota.setNota(nota);
+            itemNota.setValorTotal(itemNota.getQuantidade().multiply(itemNota.getProduto().getPrecoUnitario()));
+            totalDaNota = totalDaNota.add(itemNota.getValorTotal());
         }
         nota.setValorNota(totalDaNota);
         notaRepository.save(nota);
@@ -62,11 +62,11 @@ public class NotaController {
         return notaRepository.findById(id).map(nota -> {
             nota.setCliente(newNota.getCliente());
             BigDecimal totalDaNota = BigDecimal.ZERO;
-            for (ItemNota item : nota.getItems()) {
-                item.setNota(nota);
-                nota.setItems(item.getNota().getItems());
-                item.setValorTotal(item.getQuantidade().multiply(item.getProduto().getPrecoUnitario()));
-                totalDaNota = totalDaNota.add(item.getValorTotal());
+            for (ItemNota itemNota : nota.getItems()) {
+                itemNota.setNota(nota);
+                nota.setItems(itemNota.getNota().getItems());
+                itemNota.setValorTotal(itemNota.getQuantidade().multiply(itemNota.getProduto().getPrecoUnitario()));
+                totalDaNota = totalDaNota.add(itemNota.getValorTotal());
             }
             nota.setValorNota(totalDaNota);
             Nota notaAlterada = notaRepository.save(nota);

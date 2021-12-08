@@ -11,6 +11,7 @@ public class ItemNota implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private  Integer item;
 
     @ManyToOne
     @JoinColumn(name="id_nota")
@@ -28,9 +29,10 @@ public class ItemNota implements Serializable {
     public ItemNota() {
         super();
     }
-    public ItemNota(Integer id, Nota nota, Produto produto, BigDecimal quantidade,  BigDecimal valorTotal) {
+    public ItemNota(Integer id, Integer item, Nota nota, Produto produto, BigDecimal quantidade,  BigDecimal valorTotal) {
         super();
         this.id = id;
+        this.item = item;
         this.nota = nota;
         this.produto = produto;
         this.quantidade = quantidade;
@@ -40,8 +42,16 @@ public class ItemNota implements Serializable {
         return id;
     }
 
+    public Integer getItem() {
+        return item;
+    }
+
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public void setItem(Integer item) {
+        this.item = item;
     }
 
     public Nota getNota() {
